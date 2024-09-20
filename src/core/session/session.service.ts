@@ -36,7 +36,7 @@ export class SessionService {
         userId: payload.userId,
       } as TokenPayload),
       sessionExpireAt: expireAt,
-      phone: user.email,
+      email: user.email,
     };
   }
 

@@ -4,18 +4,19 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { UserService } from '../../../../KazanDigitalHack/src/core/users/user.service';
-import { SessionService } from '../../../../KazanDigitalHack/src/core/session/session.service';
+
 import { Request } from 'express';
-import { TokenService } from '../../../../KazanDigitalHack/src/core/token/token.service';
 import { ApiException } from '../exception-handler/api-exception';
 import { AllExceptions } from '../exception-handler/exeption-types/all-exceptions';
 import { jwtConfig } from '../configs/config';
 import { RequestExtended } from '../types/request-extended.type';
 import { UserRequest } from '../types/user-request.type';
 import { userProperty } from '../constants/request-custom-properties';
-import { TokenPayload } from '../../../../KazanDigitalHack/src/core/session/types/user.payload';
 import AuthExceptions = AllExceptions.AuthExceptions;
+import { UserService } from '#src/core/users/user.service';
+import { SessionService } from '#src/core/session/session.service';
+import { TokenService } from '#src/core/token/token.service';
+import { TokenPayload } from '#src/core/session/types/user.payload';
 
 @Injectable()
 export class AuthGuardClass implements CanActivate {
