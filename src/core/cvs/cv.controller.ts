@@ -15,7 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '#src/common/decorators/guards/auth-guard.decorator';
 import type { UserRequest } from '#src/common/types/user-request.type';
 import { User } from '#src/common/decorators/User.decorator';
-import { GetFileRdo } from '#src/core/cvs/rdo/get-file.rdo';
+import { CvRdo } from '#src/core/cvs/rdo/cv.rdo';
 
 @ApiTags('CVs')
 @Controller()
@@ -29,7 +29,7 @@ export class CvController {
     @User() user: UserRequest,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return new GetFileRdo(await this.cvService.upload(file, user.id));
+    return new CvRdo(await this.cvService.upload(file, user.id));
   }
 
   @Get('users/:userId/cvs/source')
@@ -46,7 +46,7 @@ export class CvController {
 
   @Get('users/:userId/cvs')
   async findOne(@Param('userId') userId: number) {
-    return new GetFileRdo(
+    return new CvRdo(
       await this.cvService.findOne({
         where: { user: { id: userId } },
         relations: { user: true },

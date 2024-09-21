@@ -27,6 +27,8 @@ export class PracticesRdo {
 
   company: Company;
 
+  isOpened: boolean;
+
   constructor(practice: Practices) {
     Object.assign(this, practice);
 

@@ -70,6 +70,7 @@ export class PracticesController {
     return await this.practicesService.count();
   }
 
+  @AuthGuard()
   @Patch(':id')
   async update(
     @Param('id') id: number,
@@ -84,6 +85,7 @@ export class PracticesController {
     );
   }
 
+  @AuthGuard()
   @Delete(':id')
   async remove(@Param('id') id: number) {
     return await this.practicesService.remove({ where: { id } });

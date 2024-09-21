@@ -15,14 +15,22 @@ export class UserPractice extends CustomBaseEntity {
   @PrimaryGeneratedColumn()
   readonly id: number;
 
-  @ManyToOne(() => Practices, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => Practices, {
+    nullable: false,
+    onDelete: 'CASCADE',
+    eager: true,
+  })
   @JoinColumn()
   practice: Practices;
 
-  @ManyToOne(() => UserEntity, { nullable: true, onDelete: 'CASCADE' })
+  @ManyToOne(() => UserEntity, {
+    nullable: true,
+    onDelete: 'CASCADE',
+    eager: true,
+  })
   @JoinColumn()
   user: UserEntity;
 
-  @Column({ default: UserPracticeStatuses.Started })
+  @Column({ default: UserPracticeStatuses.Active })
   status: string;
 }

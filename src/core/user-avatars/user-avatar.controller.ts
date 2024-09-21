@@ -12,7 +12,7 @@ import { UserAvatarService } from './user-avatar.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { type Response } from 'express';
 import { ApiTags } from '@nestjs/swagger';
-import { GetFileRdo } from '#src/core/user-avatars/rdo/get-file.rdo';
+import { AvatarRdo } from '#src/core/user-avatars/rdo/avatar.rdo';
 import { AuthGuard } from '#src/common/decorators/guards/auth-guard.decorator';
 import { User } from '#src/common/decorators/User.decorator';
 import type { UserRequest } from '#src/common/types/user-request.type';
@@ -29,7 +29,7 @@ export class UserAvatarController {
     @UploadedFile() file: Express.Multer.File,
     @User() user: UserRequest,
   ) {
-    return new GetFileRdo(await this.userAvatarService.upload(file, user.id));
+    return new AvatarRdo(await this.userAvatarService.upload(file, user.id));
   }
 
   @Get('source')
@@ -47,7 +47,7 @@ export class UserAvatarController {
 
   @Get()
   async findOne(@Param('userId') userId: number) {
-    return new GetFileRdo(
+    return new AvatarRdo(
       await this.userAvatarService.findOne({
         where: { user: { id: userId } },
       }),

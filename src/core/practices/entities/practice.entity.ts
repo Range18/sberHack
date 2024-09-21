@@ -35,6 +35,9 @@ export class Practices extends CustomBaseEntity {
   @Column()
   specialization: string;
 
+  @Column({ default: true })
+  isOpened: boolean;
+
   @ManyToOne(() => Direction, (direction) => direction.practices, {
     nullable: false,
     onDelete: 'CASCADE',

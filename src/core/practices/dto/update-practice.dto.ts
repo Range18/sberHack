@@ -12,4 +12,6 @@ export class UpdatePracticeDto {
   specialization?: string;
 
   directionId?: number;
+
+  isOpened?: boolean;
 }

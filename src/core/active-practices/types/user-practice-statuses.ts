@@ -1,4 +1,4 @@
 export enum UserPracticeStatuses {
-  Started = 'Started',
+  Active = 'Active',
   Completed = 'Completed',
 }
