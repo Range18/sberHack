@@ -23,6 +23,7 @@ import { PracticeRequestsModule } from '#src/core/practice-requests/practice-req
     DirectionsModule,
     PracticesModule,
     PracticeRequestsModule,
+    CvModule,
   ],
   controllers: [AppController],
   providers: [AppService],

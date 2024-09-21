@@ -8,6 +8,7 @@ import {
 import { CustomBaseEntity } from '#src/common/base-entity/base.entity';
 import { UserAvatarEntity } from '#src/core/user-avatars/entities/user-avatar.entity';
 import { PracticeRequest } from '#src/core/practice-requests/entities/practice-request.entity';
+import { CVs } from '#src/core/cvs/entities/cv.entity';
 
 @Entity('users')
 export class UserEntity extends CustomBaseEntity {
@@ -39,9 +40,16 @@ export class UserEntity extends CustomBaseEntity {
   password: string;
 
   @OneToOne(() => UserAvatarEntity, (avatar) => avatar.user, {
-    nullable: false,
+    nullable: true,
+    eager: true,
   })
   avatar?: UserAvatarEntity;
+
+  @OneToOne(() => CVs, (cv) => cv.user, {
+    nullable: true,
+    eager: true,
+  })
+  cv?: CVs;
 
   @OneToMany(
     () => PracticeRequest,

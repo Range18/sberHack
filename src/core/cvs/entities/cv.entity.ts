@@ -8,8 +8,8 @@ import {
 import { CustomBaseEntity } from '#src/common/base-entity/base.entity';
 import { UserEntity } from '#src/core/users/entity/user.entity';
 
-@Entity('user_avatars')
-export class UserAvatarEntity extends CustomBaseEntity {
+@Entity('cvs')
+export class CVs extends CustomBaseEntity {
   @PrimaryGeneratedColumn('increment')
   readonly id: number;
 
@@ -19,7 +19,7 @@ export class UserAvatarEntity extends CustomBaseEntity {
   @Column({ nullable: false })
   mimetype: string;
 
-  @OneToOne(() => UserEntity, (user) => user.avatar, {
+  @OneToOne(() => UserEntity, (user) => user.cv, {
     nullable: false,
     onDelete: 'CASCADE',
   })
