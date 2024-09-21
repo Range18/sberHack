@@ -46,6 +46,7 @@ export class CompanyAvatarController {
     return new GetFileRdo(
       await this.assetsService.findOne({
         where: { company: { id: companyId } },
+        relations: { company: true },
       }),
     );
   }

@@ -8,6 +8,8 @@ import { typeOrmConfig } from '#src/common/configs/database.config';
 import { AuthModule } from '#src/core/auth/auth.module';
 import { CompanyAvatarModule } from '#src/core/assets/company-avatar.module';
 import { UserAvatarModule } from './core/user-avatars/user-avatar.module';
+import { DirectionsModule } from '#src/core/directions/directions.module';
+import { PracticesModule } from '#src/core/practices/practices.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { UserAvatarModule } from './core/user-avatars/user-avatar.module';
     AuthModule,
     CompanyAvatarModule,
     UserAvatarModule,
+    DirectionsModule,
+    PracticesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

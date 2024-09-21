@@ -16,9 +16,17 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
     @Body() loginUserDto: LoginUserDto,
   ): Promise<LoggedUserRdo> {
+    const loginRdo = await this.authService.login(loginUserDto);
+
     response.status(200);
 
-    return await this.authService.login(loginUserDto);
+    response.cookie('token', loginRdo.accessToken, {
+      httpOnly: true,
+      secure: true,
+      expires: loginRdo.sessionExpireAt,
+    });
+
+    return loginRdo;
   }
 
   @AuthGuard()

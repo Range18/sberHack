@@ -12,11 +12,11 @@ import { jwtConfig } from '../configs/config';
 import { RequestExtended } from '../types/request-extended.type';
 import { UserRequest } from '../types/user-request.type';
 import { userProperty } from '../constants/request-custom-properties';
-import AuthExceptions = AllExceptions.AuthExceptions;
 import { UserService } from '#src/core/users/user.service';
 import { SessionService } from '#src/core/session/session.service';
 import { TokenService } from '#src/core/token/token.service';
 import { TokenPayload } from '#src/core/session/types/user.payload';
+import AuthExceptions = AllExceptions.AuthExceptions;
 
 @Injectable()
 export class AuthGuardClass implements CanActivate {
@@ -67,9 +67,6 @@ export class AuthGuardClass implements CanActivate {
   }
 
   private extractAccessToken(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' || type === 'AccessToken' || type === 'Token'
-      ? token
-      : undefined;
+    return request.cookies['token'];
   }
 }

@@ -18,6 +18,7 @@ export class Company extends CustomBaseEntity {
 
   @OneToOne(() => CompanyAvatarEntity, (avatar) => avatar.company, {
     nullable: true,
+    eager: true,
   })
   avatar?: CompanyAvatarEntity;
 }
