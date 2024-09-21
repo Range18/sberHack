@@ -8,6 +8,7 @@ import {
 import { CustomBaseEntity } from '#src/common/base-entity/base.entity';
 import { CompanyAvatarEntity } from '#src/core/assets/entities/company-avatar.entity';
 import { Practices } from '#src/core/practices/entities/practice.entity';
+import { UserEntity } from '#src/core/users/entity/user.entity';
 
 @Entity()
 export class Company extends CustomBaseEntity {
@@ -23,6 +24,9 @@ export class Company extends CustomBaseEntity {
   @Column()
   type: string;
 
+  @Column({ nullable: true })
+  address?: string;
+
   @OneToOne(() => CompanyAvatarEntity, (avatar) => avatar.company, {
     nullable: true,
     eager: true,
@@ -33,4 +37,9 @@ export class Company extends CustomBaseEntity {
     nullable: true,
   })
   practices?: Practices[];
+
+  @OneToOne(() => UserEntity, (user) => user.company, {
+    nullable: true,
+  })
+  user?: UserEntity;
 }

@@ -10,6 +10,10 @@ import {
 import { PracticeRequestsService } from './practice-requests.service';
 import { CreatePracticeRequestDto } from './dto/create-practice-request.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { PracticeRequestStatuses } from '#src/core/practice-requests/types/practice-request-statuses';
+import { AuthGuard } from '#src/common/decorators/guards/auth-guard.decorator';
+import { User } from '#src/common/decorators/User.decorator';
+import type { UserRequest } from '#src/common/types/user-request.type';
 
 @ApiTags('Practise requests')
 @Controller()
@@ -18,9 +22,18 @@ export class PracticeRequestsController {
     private readonly practiceRequestsService: PracticeRequestsService,
   ) {}
 
-  @Post('practice-requests')
-  async create(@Body() createPracticeRequestDto: CreatePracticeRequestDto) {
-    return await this.practiceRequestsService.save(createPracticeRequestDto);
+  @AuthGuard()
+  @Post('practices/:practiceId/practice-requests')
+  async create(
+    @Body() createPracticeRequestDto: CreatePracticeRequestDto,
+    @User() user: UserRequest,
+    @Param('practiceId') practiceId: number,
+  ) {
+    return await this.practiceRequestsService.save({
+      ...createPracticeRequestDto,
+      practice: { id: practiceId },
+      user: { id: user.id },
+    });
   }
 
   @Get('practice-requests')
@@ -48,7 +61,17 @@ export class PracticeRequestsController {
       {
         where: { id },
       },
-      { isAccepted: true },
+      { status: PracticeRequestStatuses.Accepted },
+    );
+  }
+
+  @Patch('practice-requests/:id/cancel')
+  async cancelOne(@Param('id') id: number) {
+    return await this.practiceRequestsService.updateOne(
+      {
+        where: { id },
+      },
+      { status: PracticeRequestStatuses.Cancelled },
     );
   }
 

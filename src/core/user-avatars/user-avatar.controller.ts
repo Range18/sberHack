@@ -13,6 +13,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { type Response } from 'express';
 import { ApiTags } from '@nestjs/swagger';
 import { GetFileRdo } from '#src/core/user-avatars/rdo/get-file.rdo';
+import { AuthGuard } from '#src/common/decorators/guards/auth-guard.decorator';
+import { User } from '#src/common/decorators/User.decorator';
+import type { UserRequest } from '#src/common/types/user-request.type';
 
 @ApiTags('User Avatars')
 @Controller('users/:userId/avatars')
@@ -20,12 +23,13 @@ export class UserAvatarController {
   constructor(private readonly userAvatarService: UserAvatarService) {}
 
   @UseInterceptors(FileInterceptor('file'))
+  @AuthGuard()
   @Post()
   async uploadImage(
     @UploadedFile() file: Express.Multer.File,
-    @Param('userId') userId: number,
+    @User() user: UserRequest,
   ) {
-    return new GetFileRdo(await this.userAvatarService.upload(file, userId));
+    return new GetFileRdo(await this.userAvatarService.upload(file, user.id));
   }
 
   @Get('source')

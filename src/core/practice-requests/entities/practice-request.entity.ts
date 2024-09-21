@@ -8,6 +8,7 @@ import {
 import { CustomBaseEntity } from '#src/common/base-entity/base.entity';
 import { UserEntity } from '#src/core/users/entity/user.entity';
 import { Practices } from '#src/core/practices/entities/practice.entity';
+import { PracticeRequestStatuses } from '#src/core/practice-requests/types/practice-request-statuses';
 
 @Entity()
 export class PracticeRequest extends CustomBaseEntity {
@@ -36,6 +37,6 @@ export class PracticeRequest extends CustomBaseEntity {
   @Column({ type: 'longtext' })
   test?: string;
 
-  @Column({ default: false })
-  isAccepted: boolean;
+  @Column({ default: PracticeRequestStatuses.Created })
+  status: string;
 }

@@ -11,6 +11,7 @@ import { UserAvatarModule } from './core/user-avatars/user-avatar.module';
 import { DirectionsModule } from '#src/core/directions/directions.module';
 import { PracticesModule } from '#src/core/practices/practices.module';
 import { PracticeRequestsModule } from '#src/core/practice-requests/practice-requests.module';
+import { CvModule } from '#src/core/cvs/cv.module';
 
 @Module({
   imports: [

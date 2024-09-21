@@ -13,17 +13,34 @@ import { CreatePracticeDto } from './dto/create-practice.dto';
 import { UpdatePracticeDto } from './dto/update-practice.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { PracticeQuery } from '#src/core/practices/dto/practice.query';
+import { AuthGuard } from '#src/common/decorators/guards/auth-guard.decorator';
+import { User } from '#src/common/decorators/User.decorator';
+import type { UserRequest } from '#src/common/types/user-request.type';
+import { UserService } from '#src/core/users/user.service';
 
 @ApiTags('Practices')
 @Controller('practices')
 export class PracticesController {
-  constructor(private readonly practicesService: PracticesService) {}
+  constructor(
+    private readonly practicesService: PracticesService,
+    private readonly userService: UserService,
+  ) {}
 
+  @AuthGuard()
   @Post()
-  async create(@Body() createPracticeDto: CreatePracticeDto) {
+  async create(
+    @Body() createPracticeDto: CreatePracticeDto,
+    @User() user: UserRequest,
+  ) {
+    const userEntity = await this.userService.findOne(
+      { where: { id: user.id } },
+      true,
+    );
+
     return await this.practicesService.save({
       ...createPracticeDto,
       direction: { id: createPracticeDto.directionId },
+      company: { id: userEntity?.company?.id },
     });
   }
 
