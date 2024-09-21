@@ -42,7 +42,7 @@ export class CompaniesController {
     return await this.companiesService.findOne({ where: { id } });
   }
 
-  @Get()
+  @Get('/count')
   async count() {
     return await this.companiesService.count();
   }

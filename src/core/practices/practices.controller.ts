@@ -60,6 +60,11 @@ export class PracticesController {
     });
   }
 
+  @Get('/count')
+  async count() {
+    return await this.practicesService.count();
+  }
+
   @Patch(':id')
   async update(
     @Param('id') id: number,

@@ -10,11 +10,6 @@ import { AuthGuard } from '#src/common/decorators/guards/auth-guard.decorator';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get()
-  async getAllUsers() {
-    return this.userService.formatToRdo(await this.userService.find({}));
-  }
-
   @AuthGuard()
   @Get('me')
   async getUserMe(@User() user: UserRequest) {
@@ -35,5 +30,10 @@ export class UserController {
         true,
       ),
     );
+  }
+
+  @Get('/students/count')
+  async studentsCount() {
+    return await this.userService.count();
   }
 }

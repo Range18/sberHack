@@ -29,4 +29,8 @@ export class UserService extends BaseEntityService<
       GetUserRdo,
     );
   }
+
+  async count() {
+    return await this.userRepository.count({ where: { role: 'student' } });
+  }
 }

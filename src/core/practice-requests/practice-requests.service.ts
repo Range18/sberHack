@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { BaseEntityService } from '#src/common/base-entity/base-entity.service';
 import { PracticeRequest } from '#src/core/practice-requests/entities/practice-request.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { ApiException } from '#src/common/exception-handler/api-exception';
 import { AllExceptions } from '#src/common/exception-handler/exeption-types/all-exceptions';
 import NotFoundExceptions = AllExceptions.NotFoundExceptions;
@@ -24,5 +24,9 @@ export class PracticeRequestsService extends BaseEntityService<
         NotFoundExceptions.NotFound,
       ),
     );
+  }
+
+  async count(options: FindManyOptions<PracticeRequest>): Promise<number> {
+    return await this.repository.count(options);
   }
 }

@@ -25,4 +25,8 @@ export class PracticesService extends BaseEntityService<
       ),
     );
   }
+
+  async count() {
+    await this.repository.count();
+  }
 }

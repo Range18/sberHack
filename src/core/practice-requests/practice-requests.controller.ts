@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { PracticeRequestsService } from './practice-requests.service';
 import { CreatePracticeRequestDto } from './dto/create-practice-request.dto';
@@ -17,6 +18,7 @@ import { User } from '#src/common/decorators/User.decorator';
 import type { UserRequest } from '#src/common/types/user-request.type';
 import { ApiException } from '#src/common/exception-handler/api-exception';
 import { AllExceptions } from '#src/common/exception-handler/exeption-types/all-exceptions';
+import { PracticeRequestsCountQuery } from '#src/core/practice-requests/dto/practice-requests-count.query';
 import RequestExceptions = AllExceptions.RequestExceptions;
 
 @ApiTags('Practise requests')
@@ -84,6 +86,13 @@ export class PracticeRequestsController {
       },
       { status: PracticeRequestStatuses.Cancelled },
     );
+  }
+
+  @Get('/count')
+  async count(@Query() query: PracticeRequestsCountQuery) {
+    return await this.practiceRequestsService.count({
+      where: { status: query.status },
+    });
   }
 
   @Delete('practice-requests/:id')
