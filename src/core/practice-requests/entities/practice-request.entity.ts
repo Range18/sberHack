@@ -31,10 +31,10 @@ export class PracticeRequest extends CustomBaseEntity {
   @JoinColumn()
   practice: Practices;
 
-  @Column({ type: 'longtext' })
+  @Column({ type: 'longtext', nullable: true })
   comment?: string;
 
-  @Column({ type: 'longtext' })
+  @Column({ type: 'longtext', nullable: true })
   test?: string;
 
   @Column({ default: PracticeRequestStatuses.Created })

@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -14,6 +15,9 @@ import { PracticeRequestStatuses } from '#src/core/practice-requests/types/pract
 import { AuthGuard } from '#src/common/decorators/guards/auth-guard.decorator';
 import { User } from '#src/common/decorators/User.decorator';
 import type { UserRequest } from '#src/common/types/user-request.type';
+import { ApiException } from '#src/common/exception-handler/api-exception';
+import { AllExceptions } from '#src/common/exception-handler/exeption-types/all-exceptions';
+import RequestExceptions = AllExceptions.RequestExceptions;
 
 @ApiTags('Practise requests')
 @Controller()
@@ -29,16 +33,23 @@ export class PracticeRequestsController {
     @User() user: UserRequest,
     @Param('practiceId') practiceId: number,
   ) {
+    const request = await this.practiceRequestsService.findOne({
+      where: { practice: { id: practiceId }, user: { id: user.id } },
+    });
+
+    if (request) {
+      throw new ApiException(
+        HttpStatus.BAD_REQUEST,
+        'RequestExceptions',
+        RequestExceptions.Already,
+      );
+    }
+
     return await this.practiceRequestsService.save({
       ...createPracticeRequestDto,
       practice: { id: practiceId },
       user: { id: user.id },
     });
-  }
-
-  @Get('practice-requests')
-  async findAll() {
-    return await this.practiceRequestsService.find({});
   }
 
   @Get('practice-requests/:id')

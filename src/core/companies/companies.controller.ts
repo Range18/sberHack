@@ -42,6 +42,11 @@ export class CompaniesController {
     return await this.companiesService.findOne({ where: { id } });
   }
 
+  @Get()
+  async count() {
+    return await this.companiesService.count();
+  }
+
   @AuthGuard()
   @Patch(':id')
   async update(

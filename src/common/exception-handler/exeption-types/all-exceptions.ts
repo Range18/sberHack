@@ -14,4 +14,8 @@ export namespace AllExceptions {
   export enum NotFoundExceptions {
     NotFound = 'Not found',
   }
+
+  export enum RequestExceptions {
+    Already = 'Заявка уже подана',
+  }
 }
