@@ -21,8 +21,9 @@ export class AuthController {
     response.status(200);
 
     response.cookie('token', loginRdo.accessToken, {
-      httpOnly: true,
+      sameSite: 'none',
       secure: true,
+      httpOnly: true,
       expires: loginRdo.sessionExpireAt,
     });
 

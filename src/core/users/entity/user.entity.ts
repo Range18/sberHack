@@ -1,6 +1,13 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { CustomBaseEntity } from '#src/common/base-entity/base.entity';
 import { UserAvatarEntity } from '#src/core/user-avatars/entities/user-avatar.entity';
+import { PracticeRequest } from '#src/core/practice-requests/entities/practice-request.entity';
 
 @Entity('users')
 export class UserEntity extends CustomBaseEntity {
@@ -35,4 +42,13 @@ export class UserEntity extends CustomBaseEntity {
     nullable: false,
   })
   avatar?: UserAvatarEntity;
+
+  @OneToMany(
+    () => PracticeRequest,
+    (practiceRequests) => practiceRequests.user,
+    {
+      nullable: true,
+    },
+  )
+  practiceRequests?: PracticeRequest[];
 }

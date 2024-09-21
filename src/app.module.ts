@@ -10,6 +10,7 @@ import { CompanyAvatarModule } from '#src/core/assets/company-avatar.module';
 import { UserAvatarModule } from './core/user-avatars/user-avatar.module';
 import { DirectionsModule } from '#src/core/directions/directions.module';
 import { PracticesModule } from '#src/core/practices/practices.module';
+import { PracticeRequestsModule } from '#src/core/practice-requests/practice-requests.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { PracticesModule } from '#src/core/practices/practices.module';
     UserAvatarModule,
     DirectionsModule,
     PracticesModule,
+    PracticeRequestsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

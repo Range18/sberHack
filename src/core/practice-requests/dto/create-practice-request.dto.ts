@@ -1,1 +1,5 @@
-export class CreatePracticeRequestDto {}
+export class CreatePracticeRequestDto {
+  comment?: string;
+
+  test?: string;
+}

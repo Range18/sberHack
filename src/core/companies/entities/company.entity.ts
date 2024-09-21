@@ -1,6 +1,13 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { CustomBaseEntity } from '#src/common/base-entity/base.entity';
 import { CompanyAvatarEntity } from '#src/core/assets/entities/company-avatar.entity';
+import { Practices } from '#src/core/practices/entities/practice.entity';
 
 @Entity()
 export class Company extends CustomBaseEntity {
@@ -21,4 +28,9 @@ export class Company extends CustomBaseEntity {
     eager: true,
   })
   avatar?: CompanyAvatarEntity;
+
+  @OneToMany(() => Practices, (practice) => practice.company, {
+    nullable: true,
+  })
+  practices?: Practices[];
 }

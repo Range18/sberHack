@@ -1,34 +1,59 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { PracticeRequestsService } from './practice-requests.service';
 import { CreatePracticeRequestDto } from './dto/create-practice-request.dto';
-import { UpdatePracticeRequestDto } from './dto/update-practice-request.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('practice-requests')
+@ApiTags('Practise requests')
+@Controller()
 export class PracticeRequestsController {
-  constructor(private readonly practiceRequestsService: PracticeRequestsService) {}
+  constructor(
+    private readonly practiceRequestsService: PracticeRequestsService,
+  ) {}
 
-  @Post()
-  create(@Body() createPracticeRequestDto: CreatePracticeRequestDto) {
-    return this.practiceRequestsService.create(createPracticeRequestDto);
+  @Post('practice-requests')
+  async create(@Body() createPracticeRequestDto: CreatePracticeRequestDto) {
+    return await this.practiceRequestsService.save(createPracticeRequestDto);
   }
 
-  @Get()
-  findAll() {
-    return this.practiceRequestsService.findAll();
+  @Get('practice-requests')
+  async findAll() {
+    return await this.practiceRequestsService.find({});
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.practiceRequestsService.findOne(+id);
+  @Get('practice-requests/:id')
+  async findOne(@Param('id') id: number) {
+    return await this.practiceRequestsService.findOne({
+      where: { id },
+    });
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePracticeRequestDto: UpdatePracticeRequestDto) {
-    return this.practiceRequestsService.update(+id, updatePracticeRequestDto);
+  @Get('practices/:practiceId/practice-requests')
+  async findPracticeRequests(@Param('practiceId') practiceId: number) {
+    return await this.practiceRequestsService.findOne({
+      where: { practice: { id: practiceId } },
+    });
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.practiceRequestsService.remove(+id);
+  @Patch('practice-requests/:id/accept')
+  async acceptOne(@Param('id') id: number) {
+    return await this.practiceRequestsService.updateOne(
+      {
+        where: { id },
+      },
+      { isAccepted: true },
+    );
+  }
+
+  @Delete('practice-requests/:id')
+  async remove(@Param('id') id: number) {
+    return await this.practiceRequestsService.remove({ where: { id } });
   }
 }
