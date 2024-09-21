@@ -65,6 +65,7 @@ export class PracticeRequestsController {
   async findPracticeRequests(@Param('practiceId') practiceId: number) {
     return await this.practiceRequestsService.find({
       where: { practice: { id: practiceId } },
+      order: { status: 'DESC' },
     });
   }
 
