@@ -63,7 +63,7 @@ export class PracticeRequestsController {
 
   @Get('practices/:practiceId/practice-requests')
   async findPracticeRequests(@Param('practiceId') practiceId: number) {
-    return await this.practiceRequestsService.findOne({
+    return await this.practiceRequestsService.find({
       where: { practice: { id: practiceId } },
     });
   }
