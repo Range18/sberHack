@@ -38,21 +38,21 @@ export class PracticesController {
       true,
     );
 
-    return new PracticesRdo(
-      await this.practicesService.save({
-        ...createPracticeDto,
-        direction: { id: createPracticeDto.directionId },
-        company: { id: userEntity?.company?.id },
-      }),
-    );
+    return await this.practicesService.save({
+      ...createPracticeDto,
+      direction: { id: createPracticeDto.directionId },
+      company: { id: userEntity?.company?.id },
+    });
   }
 
   @Get()
   async findAll(@Query() query: PracticeQuery) {
-    return await this.practicesService.find({
+    const practices = await this.practicesService.find({
       where: { company: { id: query.companyId } },
       relations: { direction: true, practiceRequests: { user: true } },
     });
+
+    return practices.map((practice) => new PracticesRdo(practice));
   }
 
   @Get(':id')

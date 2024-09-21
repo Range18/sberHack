@@ -30,8 +30,10 @@ export class PracticesRdo {
   constructor(practice: Practices) {
     Object.assign(this, practice);
 
-    this.acceptedCount = practice.practiceRequests?.filter(
-      (request) => request.status === PracticeRequestStatuses.Accepted,
-    ).length;
+    this.acceptedCount = practice.practiceRequests
+      ? practice.practiceRequests?.filter(
+          (request) => request.status === PracticeRequestStatuses.Accepted,
+        ).length
+      : 0;
   }
 }
