@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from '#src/core/users/user.module';
 import { TokenModule } from '#src/core/token/token.module';
 import { SessionModule } from '#src/core/session/session.module';
+import { UserPracticesModule } from '#src/core/active-practices/user-practices.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { SessionModule } from '#src/core/session/session.module';
     UserModule,
     TokenModule,
     SessionModule,
+    UserPracticesModule,
   ],
   controllers: [PracticeRequestsController],
   providers: [PracticeRequestsService],

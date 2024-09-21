@@ -12,6 +12,7 @@ import { DirectionsModule } from '#src/core/directions/directions.module';
 import { PracticesModule } from '#src/core/practices/practices.module';
 import { PracticeRequestsModule } from '#src/core/practice-requests/practice-requests.module';
 import { CvModule } from '#src/core/cvs/cv.module';
+import { UserPracticesModule } from '#src/core/active-practices/user-practices.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { CvModule } from '#src/core/cvs/cv.module';
     PracticesModule,
     PracticeRequestsModule,
     CvModule,
+    UserPracticesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

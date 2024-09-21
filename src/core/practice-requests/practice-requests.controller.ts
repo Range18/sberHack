@@ -19,6 +19,7 @@ import type { UserRequest } from '#src/common/types/user-request.type';
 import { ApiException } from '#src/common/exception-handler/api-exception';
 import { AllExceptions } from '#src/common/exception-handler/exeption-types/all-exceptions';
 import { PracticeRequestsCountQuery } from '#src/core/practice-requests/dto/practice-requests-count.query';
+import { UserPracticesService } from '#src/core/active-practices/user-practices.service';
 import RequestExceptions = AllExceptions.RequestExceptions;
 
 @ApiTags('Practise requests')
@@ -26,6 +27,7 @@ import RequestExceptions = AllExceptions.RequestExceptions;
 export class PracticeRequestsController {
   constructor(
     private readonly practiceRequestsService: PracticeRequestsService,
+    private readonly userPracticesService: UserPracticesService,
   ) {}
 
   @AuthGuard()
@@ -71,6 +73,18 @@ export class PracticeRequestsController {
 
   @Patch('practice-requests/:id/accept')
   async acceptOne(@Param('id') id: number) {
+    const request = await this.practiceRequestsService.findOne(
+      {
+        where: { id },
+      },
+      true,
+    );
+
+    await this.userPracticesService.save({
+      practice: { id: request.practice.id },
+      user: { id: request.user.id },
+    });
+
     return await this.practiceRequestsService.updateOne(
       {
         where: { id },
