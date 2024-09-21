@@ -20,7 +20,7 @@ export class Practices extends CustomBaseEntity {
   @Column()
   name: string;
 
-  @Column({ type: 'longtext' })
+  @Column({ type: 'longtext', nullable: true })
   description?: string;
 
   @Column()

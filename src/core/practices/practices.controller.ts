@@ -17,6 +17,7 @@ import { AuthGuard } from '#src/common/decorators/guards/auth-guard.decorator';
 import { User } from '#src/common/decorators/User.decorator';
 import type { UserRequest } from '#src/common/types/user-request.type';
 import { UserService } from '#src/core/users/user.service';
+import { PracticesRdo } from '#src/core/practices/rdo/practices.rdo';
 
 @ApiTags('Practices')
 @Controller('practices')
@@ -37,11 +38,13 @@ export class PracticesController {
       true,
     );
 
-    return await this.practicesService.save({
-      ...createPracticeDto,
-      direction: { id: createPracticeDto.directionId },
-      company: { id: userEntity?.company?.id },
-    });
+    return new PracticesRdo(
+      await this.practicesService.save({
+        ...createPracticeDto,
+        direction: { id: createPracticeDto.directionId },
+        company: { id: userEntity?.company?.id },
+      }),
+    );
   }
 
   @Get()
@@ -54,10 +57,12 @@ export class PracticesController {
 
   @Get(':id')
   async findOne(@Param('id') id: number) {
-    return await this.practicesService.findOne({
-      where: { id },
-      relations: { direction: true, practiceRequests: { user: true } },
-    });
+    return new PracticesRdo(
+      await this.practicesService.findOne({
+        where: { id },
+        relations: { direction: true, practiceRequests: { user: true } },
+      }),
+    );
   }
 
   @Get('/count')
