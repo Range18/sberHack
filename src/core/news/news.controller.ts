@@ -24,7 +24,7 @@ export class NewsController {
 
   @Get()
   async findAll() {
-    return await this.newsService.find({});
+    return await this.newsService.find({ order: { id: 'DESC' } });
   }
 
   @Get(':id')
