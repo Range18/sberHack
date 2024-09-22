@@ -29,6 +29,14 @@ export class CvService extends BaseEntityService<CVs, 'NotFoundExceptions'> {
   }
 
   async upload(file: Express.Multer.File, userId: number) {
+    const avatar = await this.findOne({
+      where: { user: { id: userId } },
+    });
+
+    if (avatar) {
+      await this.deleteFile(userId);
+    }
+
     return await this.save({
       name: file.filename,
       mimetype: file.mimetype,
@@ -60,8 +68,8 @@ export class CvService extends BaseEntityService<CVs, 'NotFoundExceptions'> {
     }
   }
 
-  async deleteFile(userId: number) {
-    const image = await this.findOne({ where: { user: { id: userId } } });
+  async deleteFile(id: number) {
+    const image = await this.findOne({ where: { user: { id } } });
 
     if (!image) {
       new ApiException<'NotFoundExceptions'>(
@@ -70,6 +78,8 @@ export class CvService extends BaseEntityService<CVs, 'NotFoundExceptions'> {
         NotFoundExceptions.NotFound,
       );
     }
+
+    await this.removeOne(image);
 
     try {
       await unlink(join(storageConfig.rootPath, image.name));

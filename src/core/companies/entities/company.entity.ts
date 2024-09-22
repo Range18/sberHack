@@ -18,7 +18,7 @@ export class Company extends CustomBaseEntity {
   @Column()
   name: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'longtext', nullable: true })
   description?: string;
 
   @Column()

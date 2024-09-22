@@ -32,6 +32,14 @@ export class CompanyAvatarService extends BaseEntityService<
   }
 
   async upload(file: Express.Multer.File, companyId: number) {
+    const avatar = await this.findOne({
+      where: { company: { id: companyId } },
+    });
+
+    if (avatar) {
+      await this.deleteFile(companyId);
+    }
+
     return await this.save({
       name: file.filename,
       mimetype: file.mimetype,
@@ -73,6 +81,8 @@ export class CompanyAvatarService extends BaseEntityService<
         NotFoundExceptions.NotFound,
       );
     }
+
+    await this.removeOne(image);
 
     try {
       await unlink(join(storageConfig.rootPath, image.name));

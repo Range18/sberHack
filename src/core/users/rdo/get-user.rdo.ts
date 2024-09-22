@@ -24,7 +24,14 @@ export class GetUserRdo {
   avatar?: AvatarRdo;
 
   constructor(user: UserEntity) {
-    Object.assign(this, user);
+    this.id = user.id;
+    this.name = user.name;
+    this.surname = user.surname;
+    this.lastname = user.lastname;
+    this.university = user.university;
+    this.specialization = user.specialization;
+    this.course = user.course;
+    this.email = user.email;
 
     this.cv = user.cv ? new CvRdo(user.cv, user.id) : undefined;
     this.avatar = user.avatar ? new AvatarRdo(user.avatar, user.id) : undefined;

@@ -9,16 +9,13 @@ export class DirectionsController {
 
   @Get()
   async findAll() {
-    return await this.directionsService.find({
-      relations: { practices: true },
-    });
+    return await this.directionsService.find({});
   }
 
   @Get(':id')
   async findOne(@Param('id') id: number) {
     return await this.directionsService.findOne({
       where: { id },
-      relations: { practices: true },
     });
   }
 }

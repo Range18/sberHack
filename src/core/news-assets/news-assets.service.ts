@@ -32,6 +32,14 @@ export class NewsAssetsService extends BaseEntityService<
   }
 
   async upload(file: Express.Multer.File, newsId: number) {
+    const asset = await this.findOne({
+      where: { news: { id: newsId } },
+    });
+
+    if (asset) {
+      await this.deleteFile(asset.name);
+    }
+
     return await this.save({
       name: file.filename,
       mimetype: file.mimetype,
@@ -73,6 +81,8 @@ export class NewsAssetsService extends BaseEntityService<
         NotFoundExceptions.NotFound,
       );
     }
+
+    await this.removeOne(image);
 
     try {
       await unlink(join(storageConfig.rootPath, image.name));
