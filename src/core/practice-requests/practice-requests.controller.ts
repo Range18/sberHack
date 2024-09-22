@@ -20,6 +20,7 @@ import { ApiException } from '#src/common/exception-handler/api-exception';
 import { AllExceptions } from '#src/common/exception-handler/exeption-types/all-exceptions';
 import { PracticeRequestsCountQuery } from '#src/core/practice-requests/dto/practice-requests-count.query';
 import { UserPracticesService } from '#src/core/active-practices/user-practices.service';
+import { PracticeRequestRdo } from '#src/core/practice-requests/rdo/practice-request.rdo';
 import RequestExceptions = AllExceptions.RequestExceptions;
 
 @ApiTags('Practise requests')
@@ -58,17 +59,52 @@ export class PracticeRequestsController {
 
   @Get('practice-requests/:id')
   async findOne(@Param('id') id: number) {
-    return await this.practiceRequestsService.findOne({
-      where: { id },
-    });
+    return new PracticeRequestRdo(
+      await this.practiceRequestsService.findOne({
+        where: { id },
+      }),
+    );
   }
 
   @Get('practices/:practiceId/practice-requests')
   async findPracticeRequests(@Param('practiceId') practiceId: number) {
-    return await this.practiceRequestsService.find({
+    const requests = await this.practiceRequestsService.find({
       where: { practice: { id: practiceId } },
       order: { status: 'DESC' },
+      relations: { practice: true, user: { cv: true, avatar: true } },
     });
+
+    return requests.map(
+      (practiceRequest) => new PracticeRequestRdo(practiceRequest),
+    );
+  }
+
+  @Get('practices/:practiceId/practice-requests/accepted')
+  async findPracticeRequestsAccepted(@Param('practiceId') practiceId: number) {
+    const requests = await this.practiceRequestsService.find({
+      where: {
+        practice: { id: practiceId },
+        status: PracticeRequestStatuses.Accepted,
+      },
+      order: { status: 'DESC' },
+      relations: { practice: true, user: { cv: true, avatar: true } },
+    });
+
+    return requests.map(
+      (practiceRequest) => new PracticeRequestRdo(practiceRequest),
+    );
+  }
+
+  @Get('users/:userId/practice-requests')
+  async findUserPracticeRequests(@Param('userId') userId: number) {
+    const requests = await this.practiceRequestsService.find({
+      where: { user: { id: userId } },
+      relations: { practice: true, user: { cv: true, avatar: true } },
+    });
+
+    return requests.map(
+      (practiceRequest) => new PracticeRequestRdo(practiceRequest),
+    );
   }
 
   @Patch('practice-requests/:id/accept')

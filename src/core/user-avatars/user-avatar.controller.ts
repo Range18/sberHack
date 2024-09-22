@@ -18,13 +18,13 @@ import { User } from '#src/common/decorators/User.decorator';
 import type { UserRequest } from '#src/common/types/user-request.type';
 
 @ApiTags('User Avatars')
-@Controller('users/:userId/avatars')
+@Controller('users')
 export class UserAvatarController {
   constructor(private readonly userAvatarService: UserAvatarService) {}
 
   @UseInterceptors(FileInterceptor('file'))
   @AuthGuard()
-  @Post()
+  @Post('avatars')
   async uploadImage(
     @UploadedFile() file: Express.Multer.File,
     @User() user: UserRequest,
@@ -32,7 +32,7 @@ export class UserAvatarController {
     return new AvatarRdo(await this.userAvatarService.upload(file, user.id));
   }
 
-  @Get('source')
+  @Get(':userId/avatars/source')
   async GetImageStream(
     @Res({ passthrough: true }) res: Response,
     @Param('userId') userId: number,
@@ -45,7 +45,7 @@ export class UserAvatarController {
     return buffer;
   }
 
-  @Get()
+  @Get(':userId/avatars')
   async findOne(@Param('userId') userId: number) {
     return new AvatarRdo(
       await this.userAvatarService.findOne({
@@ -54,7 +54,7 @@ export class UserAvatarController {
     );
   }
 
-  @Delete()
+  @Delete(':userId/avatars')
   async remove(@Param('userId') userId: number) {
     return await this.userAvatarService.deleteFile(userId);
   }

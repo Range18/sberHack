@@ -41,6 +41,9 @@ export class UserEntity extends CustomBaseEntity {
   @Column({ nullable: false, unique: true })
   email: string;
 
+  @Column({ nullable: true })
+  phone?: string;
+
   @Column({ nullable: false })
   password: string;
 

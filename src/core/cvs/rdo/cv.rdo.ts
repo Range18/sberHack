@@ -14,11 +14,11 @@ export class CvRdo {
 
   readonly createAt: Date;
 
-  constructor(file: CVs) {
+  constructor(file: CVs, userId?: number) {
     this.id = file.id;
     this.name = file.name;
     this.mimetype = file.mimetype;
-    this.url = `${backendServer.urlValue}/users/${file.user.id}/cvs/source`;
+    this.url = `${backendServer.urlValue}/users/${userId ?? file.user.id}/cvs/source`;
     this.createAt = file.createdAt;
     this.updatedAt = file.updatedAt;
   }

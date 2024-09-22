@@ -14,11 +14,11 @@ export class AvatarRdo {
 
   readonly createAt: Date;
 
-  constructor(file: UserAvatarEntity) {
+  constructor(file: UserAvatarEntity, userId?: number) {
     this.id = file.id;
     this.name = file.name;
     this.mimetype = file.mimetype;
-    this.url = `${backendServer.urlValue}/users/${file.user.id}/avatars/source`;
+    this.url = `${backendServer.urlValue}/users/${userId ?? file.user.id}/avatars/source`;
     this.createAt = file.createdAt;
     this.updatedAt = file.updatedAt;
   }

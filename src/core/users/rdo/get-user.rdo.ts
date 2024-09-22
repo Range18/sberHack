@@ -26,7 +26,7 @@ export class GetUserRdo {
   constructor(user: UserEntity) {
     Object.assign(this, user);
 
-    this.cv = user.cv ? new CvRdo(user.cv) : undefined;
-    this.avatar = user.avatar ? new AvatarRdo(user.avatar) : undefined;
+    this.cv = user.cv ? new CvRdo(user.cv, user.id) : undefined;
+    this.avatar = user.avatar ? new AvatarRdo(user.avatar, user.id) : undefined;
   }
 }

@@ -4,6 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { type UserRequest } from '#src/common/types/user-request.type';
 import { User } from '#src/common/decorators/User.decorator';
 import { AuthGuard } from '#src/common/decorators/guards/auth-guard.decorator';
+import { GetUserRdo } from '#src/core/users/rdo/get-user.rdo';
 
 @ApiTags('users')
 @Controller('users')
@@ -13,7 +14,7 @@ export class UserController {
   @AuthGuard()
   @Get('me')
   async getUserMe(@User() user: UserRequest) {
-    return this.userService.formatToRdo(
+    return new GetUserRdo(
       await this.userService.findOne({
         where: { id: user.id },
       }),
