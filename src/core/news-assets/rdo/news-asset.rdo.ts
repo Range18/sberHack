@@ -1,7 +1,7 @@
 import { backendServer } from '#src/common/configs/config';
-import { CompanyAvatarEntity } from '#src/core/assets/entities/company-avatar.entity';
+import { NewsAssetsEntity } from '#src/core/news-assets/entities/news-assets.entity';
 
-export class GetFileRdo {
+export class NewsAssetRdo {
   readonly id: number;
 
   readonly name: string;
@@ -14,11 +14,11 @@ export class GetFileRdo {
 
   readonly createAt: Date;
 
-  constructor(file: CompanyAvatarEntity) {
+  constructor(file: NewsAssetsEntity) {
     this.id = file.id;
     this.name = file.name;
     this.mimetype = file.mimetype;
-    this.url = `${backendServer.urlValue}/companies/${file.company.id}/avatars/source `;
+    this.url = `${backendServer.urlValue}/news/images/${file.name}/source`;
     this.createAt = file.createdAt;
     this.updatedAt = file.updatedAt;
   }

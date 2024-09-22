@@ -14,6 +14,8 @@ import { PracticeRequestsModule } from '#src/core/practice-requests/practice-req
 import { CvModule } from '#src/core/cvs/cv.module';
 import { UserPracticesModule } from '#src/core/active-practices/user-practices.module';
 import { PracticeDiariesModule } from '#src/core/practice-diaries/practice-diaries.module';
+import { NewsAssetsModule } from '#src/core/news-assets/news-assets.module';
+import { NewsModule } from '#src/core/news/news.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { PracticeDiariesModule } from '#src/core/practice-diaries/practice-diari
     CvModule,
     UserPracticesModule,
     PracticeDiariesModule,
+    NewsAssetsModule,
+    NewsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
