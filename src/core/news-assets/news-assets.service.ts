@@ -63,7 +63,7 @@ export class NewsAssetsService extends BaseEntityService<
 
       return { buffer: new StreamableFile(stream), mimetype: image.mimetype };
     } catch (error) {
-      new ApiException<'NotFoundExceptions'>(
+      throw new ApiException<'NotFoundExceptions'>(
         HttpStatus.NOT_FOUND,
         'NotFoundExceptions',
         NotFoundExceptions.NotFound,

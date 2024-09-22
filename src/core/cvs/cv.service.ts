@@ -60,7 +60,7 @@ export class CvService extends BaseEntityService<CVs, 'NotFoundExceptions'> {
 
       return { buffer: new StreamableFile(stream), mimetype: image.mimetype };
     } catch (error) {
-      new ApiException<'NotFoundExceptions'>(
+      throw new ApiException<'NotFoundExceptions'>(
         HttpStatus.NOT_FOUND,
         'NotFoundExceptions',
         NotFoundExceptions.NotFound,
