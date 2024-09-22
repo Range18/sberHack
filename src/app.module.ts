@@ -13,6 +13,7 @@ import { PracticesModule } from '#src/core/practices/practices.module';
 import { PracticeRequestsModule } from '#src/core/practice-requests/practice-requests.module';
 import { CvModule } from '#src/core/cvs/cv.module';
 import { UserPracticesModule } from '#src/core/active-practices/user-practices.module';
+import { PracticeDiariesModule } from '#src/core/practice-diaries/practice-diaries.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UserPracticesModule } from '#src/core/active-practices/user-practices.m
     PracticeRequestsModule,
     CvModule,
     UserPracticesModule,
+    PracticeDiariesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
